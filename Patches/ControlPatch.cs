@@ -41,12 +41,9 @@ namespace TownOfHost
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
-                if (AmongUsClient.Instance.GameMode == GameModes.FreePlay)
+                foreach (var pc in PlayerControl.AllPlayerControls)
                 {
-                    foreach (var pc in PlayerControl.AllPlayerControls)
-                    {
-                        pc.RpcShapeshift(PlayerControl.LocalPlayer, false);
-                    }
+                    pc.RpcShapeshift(PlayerControl.LocalPlayer, true);
                 }
             }
             if (Input.GetKeyDown(KeyCode.O))
