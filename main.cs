@@ -228,6 +228,7 @@ namespace TownOfHost
         public static byte ExiledJesterID;
         public static byte WonTerroristID;
         public static bool CustomWinTrigger;
+        public static Dictionary<byte,(string,bool)> PlayerVersions;
         //SyncCustomSettingsRPC Sender
         public static void SyncCustomSettingsRPC() {
             if(!AmongUsClient.Instance.AmHost) return;
@@ -250,6 +251,13 @@ namespace TownOfHost
             writer.Write(PlayerID);
             writer.Write((byte)sound);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
+        }
+        public static void SyncVersionRPC() {
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SyncVersion, Hazel.SendOption.Reliable, -1);
+            writer.Write(PluginVersion);
+            writer.Write(PluginVersionType == VersionTypes.Beta);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.SyncVersion(PlayerControl.LocalPlayer.PlayerId,PluginVersion,PluginVersionType == VersionTypes.Beta);
         }
         public static void CheckTerroristWin(GameData.PlayerInfo Terrorist) {
             if(!AmongUsClient.Instance.AmHost) return;
@@ -299,6 +307,7 @@ namespace TownOfHost
             OptionControllerIsEnable = false;
             BitPlayers = new Dictionary<byte, (byte, float)>();
             winnerList = "";
+            PlayerVersions = new Dictionary<byte, (string, bool)>();
 
             currentScientist = ScientistRole.Default;
             currentEngineer = EngineerRole.Default;

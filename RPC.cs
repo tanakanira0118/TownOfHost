@@ -18,14 +18,15 @@ namespace TownOfHost {
         JesterExiled,
         TerroristWin,
         EndGame,
-        PlaySound
+        PlaySound,
+        SyncVersion
     }
     public enum Sounds {
         KillSound
     }
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
     class RPCHandlerPatch {
-        public static void Postfix([HarmonyArgument(0)]byte callId, [HarmonyArgument(1)]MessageReader reader) {
+        public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)]byte callId, [HarmonyArgument(1)]MessageReader reader) {
             byte packetID = callId;
             switch(packetID) {
                 case (byte)CustomRPC.SyncCustomSettings:
@@ -64,6 +65,12 @@ namespace TownOfHost {
                     byte playerID = reader.ReadByte();
                     Sounds sound = (Sounds)reader.ReadByte();
                     RPCProcedure.PlaySound(playerID, sound);
+                    break;
+                case (byte)CustomRPC.SyncVersion:
+                    string version = reader.ReadString();
+                    bool isBeta = reader.ReadBoolean();
+                    byte PlayerID = __instance.PlayerId;
+                    RPCProcedure.SyncVersion(PlayerID,version,isBeta);
                     break;
             }
         }
@@ -159,6 +166,9 @@ namespace TownOfHost {
                         break;
                 }
             }
+        }
+        public static void SyncVersion(byte playerID, string version, bool isBeta) {
+            main.PlayerVersions[playerID] = (version,isBeta);
         }
     }
 }

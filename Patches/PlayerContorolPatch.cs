@@ -124,6 +124,16 @@ namespace TownOfHost
                 }
             }
             var RoleTextTransform = __instance.nameText.transform.Find("RoleText");
+            /*if(RoleTextTransform == null) {
+                var roleText = UnityEngine.Object.Instantiate(__instance.nameText);
+                roleText.transform.SetParent(__instance.nameText.transform);
+                roleText.transform.localPosition = new Vector3(0f,0.175f,0f);
+                roleText.fontSize = 0.55f;
+                roleText.text = "RoleText";
+                roleText.gameObject.name = "RoleText";
+                roleText.enabled = false;
+                RoleTextTransform = __instance.nameText.transform.Find("RoleText");
+            }*/
             var RoleText = RoleTextTransform.GetComponent<TMPro.TextMeshPro>();
             if(RoleText != null) {
                 var RoleTextData = main.GetRoleText(__instance.Data.Role.Role);
@@ -131,9 +141,29 @@ namespace TownOfHost
                 RoleText.color = RoleTextData.Item2;
                 if(__instance.AmOwner/* || PlayerControl.LocalPlayer.Data.IsDead*/) RoleText.enabled = true;
                 else RoleText.enabled = false;
+
                 if(!AmongUsClient.Instance.IsGameStarted &&
-                AmongUsClient.Instance.GameMode != GameModes.FreePlay)
-                RoleText.enabled = false;
+                AmongUsClient.Instance.GameMode != GameModes.FreePlay) {
+                    //ゲームが始まっていなく、フリープレイ中でもないとき
+                    RoleText.enabled = false;
+                    /*RoleText.enabled = true;
+                    string text = "";
+                    Color textColor = Color.white;
+                    var hasMod = main.PlayerVersions.TryGetValue(__instance.PlayerId, out var versionData);
+                    if(hasMod) {
+                        text = versionData.Item1;
+                        if(versionData.Item2) text += "b";
+                    } else {
+                        text = "No mods";
+                    }
+                    //text = hasMod ? 
+                    //    versionData.Item2 ? versionData.Item1 + "b" : versionData.Item1
+                    //    : "No mods";
+                    if(hasMod && versionData.Item2) textColor = Color.yellow;
+                    if(hasMod && versionData.Item1 != main.PluginVersion) textColor = Color.red;
+                    RoleText.text = text;
+                    RoleText.color = textColor;*/
+                }
             }
         }
     }
