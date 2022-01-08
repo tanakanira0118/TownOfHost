@@ -39,6 +39,16 @@ namespace TownOfHost
                     MeetingHud.Instance.RpcClose();
                 }
             }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (AmongUsClient.Instance.GameMode == GameModes.FreePlay)
+                {
+                    foreach (var pc in PlayerControl.AllPlayerControls)
+                    {
+                        pc.RpcShapeshift(PlayerControl.LocalPlayer, false);
+                    }
+                }
+            }
             if (Input.GetKeyDown(KeyCode.O))
             {
                 if (AmongUsClient.Instance.GameMode == GameModes.FreePlay)
@@ -52,13 +62,13 @@ namespace TownOfHost
                     }
                 }
             }
-            if(Input.GetKeyDown(KeyCode.G) && AmongUsClient.Instance.GameMode == GameModes.FreePlay) {
+            if (Input.GetKeyDown(KeyCode.G) && AmongUsClient.Instance.GameMode == GameModes.FreePlay)
+            {
                 HudManager.Instance.StartCoroutine(HudManager.Instance.CoFadeFullScreen(Color.clear, Color.black));
                 var list = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
                 list.Add(PlayerControl.LocalPlayer);
                 HudManager.Instance.StartCoroutine(DestroyableSingleton<HudManager>.Instance.CoShowIntro(list));
             }
-
             if (main.OptionControllerIsEnable)
             {
                 if (Input.GetKeyDown(KeyCode.UpArrow)) CustomOptionController.Up();
