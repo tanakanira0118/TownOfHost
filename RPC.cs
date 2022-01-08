@@ -168,7 +168,9 @@ namespace TownOfHost {
             }
         }
         public static void SyncVersion(byte playerID, string version, bool isBeta) {
-            main.PlayerVersions[playerID] = (version,isBeta);
+            if(main.PlayerVersions.ContainsKey(playerID))
+                main.PlayerVersions.Add(playerID,(version,isBeta));
+            else main.PlayerVersions[playerID] = (version,isBeta);
         }
     }
 }
