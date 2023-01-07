@@ -35,7 +35,7 @@ namespace TownOfHost
         }
         public static bool IsEnable()        {
             return playerIdList.Count > 0;
-        }
+        } 
         public static void RPCSetTarget(byte trackerId, int targetId)
         {
             switch (targetId)
