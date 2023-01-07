@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TownOfHost
 {
     public static class EvilTracker
-    {
+    { 
         private static readonly int Id = 2900;
         public static List<byte> playerIdList = new();
 
@@ -19,13 +19,13 @@ namespace TownOfHost
         {
             Options.SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.EvilTracker);
             CanSeeKillFlash = CustomOption.Create(Id + 10, TabGroup.ImpostorRoles, Color.white, "EvilTrackerCanSeeKillFlash", true, Options.CustomRoleSpawnChances[CustomRoles.EvilTracker]);
-            CanResetTargetAfterMeeting = CustomOption.Create(Id + 11, TabGroup.ImpostorRoles, Color.white, "EvilTrackerResetTargetAfterMeeting", true, Options.CustomRoleSpawnChances[CustomRoles.EvilTracker]);
+        CanResetTargetAfterMeeting = CustomOption.Create(Id + 11, TabGroup.ImpostorRoles, Color.white, "EvilTrackerResetTargetAfterMeeting", true, Options.CustomRoleSpawnChances[CustomRoles.EvilTracker]);
         }
         public static void Init()
         {
-            playerIdList = new();
+            playerIdList=new();
             Target = new();
-            CanSetTarget = new();
+            CanSetTarget= new();
         }
         public static void Add(byte playerId)
         {
@@ -33,10 +33,9 @@ namespace TownOfHost
             CanSetTarget.Add(playerId, true);
             Utils.GetPlayerById(playerId).GetTarget();
         }
-        public static bool IsEnable()
-        {
+        public static bool IsEnable()        {
             return playerIdList.Count > 0;
-        }
+        } 
         public static void RPCSetTarget(byte trackerId, int targetId)
         {
             switch (targetId)
@@ -58,8 +57,7 @@ namespace TownOfHost
             }
         }
 
-        public static void ApplyGameOptions(GameOptionsData opt, byte playerId)
-        {
+        public static void ApplyGameOptions(GameOptionsData opt, byte playerId)        {
             opt.RoleOptions.ShapeshifterCooldown = CanSetTarget[playerId] ? 5f : 255f;
             opt.RoleOptions.ShapeshifterDuration = 1f;
         }
