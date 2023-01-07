@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TownOfHost
 {
     public static class EvilTracker
-    {
+    { 
         private static readonly int Id = 2900;
         public static List<byte> playerIdList = new();
 
