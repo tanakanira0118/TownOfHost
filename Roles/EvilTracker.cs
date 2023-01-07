@@ -33,8 +33,7 @@ namespace TownOfHost
             CanSetTarget.Add(playerId, true);
             Utils.GetPlayerById(playerId).GetTarget();
         }
-        public static bool IsEnable()
-        {
+        public static bool IsEnable()        {
             return playerIdList.Count > 0;
         }
         public static void RPCSetTarget(byte trackerId, int targetId)
