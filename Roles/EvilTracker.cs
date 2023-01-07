@@ -25,7 +25,7 @@ namespace TownOfHost
         {
             playerIdList=new();
             Target = new();
-            CanSetTarget = new();
+            CanSetTarget= new();
         }
         public static void Add(byte playerId)
         {
