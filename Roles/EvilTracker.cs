@@ -57,8 +57,7 @@ namespace TownOfHost
             }
         }
 
-        public static void ApplyGameOptions(GameOptionsData opt, byte playerId)
-        {
+        public static void ApplyGameOptions(GameOptionsData opt, byte playerId)        {
             opt.RoleOptions.ShapeshifterCooldown = CanSetTarget[playerId] ? 5f : 255f;
             opt.RoleOptions.ShapeshifterDuration = 1f;
         }
